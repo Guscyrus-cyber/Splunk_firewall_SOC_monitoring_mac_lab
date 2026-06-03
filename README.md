@@ -325,7 +325,7 @@ Alert Name: Listening Service Detection
 
 Description: Detects services actively listening for incoming network connection.\
 
-Please refer to image # 24 in the repository.
+Please refer to image # 25 in the repository.
 
 **Step 14 — Detection Rule**
 
@@ -368,7 +368,7 @@ ControlCe ... TCP \*:5000 (LISTEN)\
 
 Investigation and Process analysis was performed through Mac terminal using the PIDs identified in the firewall dataset. The corresponding processes were no longer active at the time of investigation, indicating that the applications had terminated or restarted since the original data collection. The firewall snapshot nevertheless confirmed that the “ creative” process was listening on localhost-only ports, while the ControlCe process was listening on ports 5000 and 7000 across network interfaces. These findings demonstrate how firewall monitoring can identify applications responsible for exposing network services and help analysts assess potential attack surface exposure.
 
-Please refer to images # 25 and 26 in the repository.
+Please refer to images # 26 and 27 and 26 in the repository.
 \
 **Step 15 — Threat Hunting Query**
 
@@ -380,6 +380,6 @@ index=firewall\
 
 Review listening services, open ports, and exposed applications for threat-hunting activities.
 
-Please refer to repository images # 27 and 28.
+Please refer to repository images # 28 and 29.
 
 This lab used Splunk Enterprise to analyze firewall-related data, identify listening services and exposed ports, and create dashboards, reports, alerts, detections, and threat-hunting queries for attack surface monitoring.
