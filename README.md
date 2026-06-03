@@ -1,5 +1,5 @@
  **Splunk SOC Monitoring firewall Lab**
-\
+
 
 The goal of this lab was to ingest firewall-related data collected from a MacBook Pro into Splunk Enterprise and perform SOC monitoring activities to identify listening services, exposed ports, and potential attack surfaces through dashboards, reports, alerts, detections, and threat-hunting queries.\
 \
@@ -38,16 +38,18 @@ Index: firewall\
 Sourcetype: mac_firewall\
 Host: MacBookPro\
 \
-The firewall index had already been created during the Splunk lab setup previous lab and was reused for the Firewall SOC Monitoring Lab. The listening_ports.log dataset was uploaded into the existing index for analysis**.\**
+The firewall index had already been created during the Splunk lab setup previous lab and was reused for the Firewall SOC Monitoring Lab. The listening_ports.log dataset was uploaded into the existing index for analysis.
 
 Description: The listening ports dataset was uploaded into Splunk Enterprise and assigned to the firewall index to support firewall monitoring and attack surface analysis.
 \
+Please refer to images # 1 and 2 in the repository.
 
 **Step 3 — Verify Ingestion**
 
 
 Search bar: index=firewall\
-Verify that firewall data was successfully ingested into Splunk.\
+Verify that firewall data was successfully ingested into Splunk.
+Please refer to image # 3 in the repository.
 
 
 **Step 4 — Verify Event Count**
@@ -58,7 +60,8 @@ Search bar:\
 index=firewall\
 \| stats count
 
-Count firewall events stored in the index.\
+Count firewall events stored in the index.
+Please refer to image # 4 in the repository.
 
 
 **Step 5 — Review Listening Services**
@@ -69,7 +72,8 @@ index=firewall LISTEN
 
 Purpose:
 
-Identify services actively listening for network connections.\
+Identify services actively listening for network connections.
+Please refer to image # 5 in the repository.
 
 
  **Step 6 — Review Open Ports**
@@ -80,6 +84,7 @@ index=firewall\
 \| table \_raw
 
 Review exposed ports and listening services.
+Please refer to images # 6 and 7  in the repository.
 
 
 **Step 7 — Search for SSH Port**
@@ -173,7 +178,9 @@ TCP 192.168.1.193:58609-\>150.171.109.73:443 (ESTABLISHED)
 
 Mac is actively communicating with 150.171.109.73 on HTTPS port 443.
 
-The firewall dataset was generated using lsof -i -P -n, which captures active network sockets and listening services. The output includes process names (COMMAND), process IDs (PID), file descriptors (FD), protocol types (TYPE), socket identifiers (DEVICE), transport protocols (NODE), and network connection details (NAME). These fields allow analysts to identify which applications are using network ports, what services are listening, and which remote systems are communicating with the endpoint.\
+The firewall dataset was generated using lsof -i -P -n, which captures active network sockets and listening services. The output includes process names (COMMAND), process IDs (PID), file descriptors (FD), protocol types (TYPE), socket identifiers (DEVICE), transport protocols (NODE), and network connection details (NAME). These fields allow analysts to identify which applications are using network ports, what services are listening, and which remote systems are communicating with the endpoint.
+
+Please refer to images # 8, 9, and 10 in the repository.
 \
 Step 8 — Search for Web Services
 
@@ -222,6 +229,7 @@ instead of:
 80 = HTTP
 
 This query was used to identify web-related network activity within the firewall dataset by searching for ports 80 (HTTP) and 443 (HTTPS). The results showed active communications using port 443, indicating encrypted web traffic between the MacBook Pro and external systems. No significant HTTP (port 80) activity was observed, which is expected because most modern web services use HTTPS for secure communications. The findings demonstrate how firewall data can be used to identify web services and encrypted network activity.
+Please refer to image # 11 in the repository.
 
 
 **Step 9 — Search for Database Services**
@@ -230,7 +238,7 @@ Search: index=firewall 3306
 
 Identify MySQL database exposure.\
 \
-The search for port 3306 returned no results, indicating that MySQL database service activity was not identified in the firewall dataset. This suggests that port 3306 was not present in the collected listening_ports.log snapshot. The absence of this result does not confirm that MySQL is never used on the system; it only means that MySQL was not detected in this specific dataset during the collection period.\
+The search for port 3306 returned no results, indicating that MySQL database service activity was not identified in the firewall dataset. This suggests that port 3306 was not present in the collected listening_ports.log snapshot. The absence of this result does not confirm that MySQL is never used on the system; it only means that MySQL was not detected in this specific dataset during the collection period.
 \
 **Additional Firewall Investigation Queries\
 \
@@ -271,6 +279,7 @@ index=firewall (445 OR 139 OR 21 OR 23)\
 Identify SMB, FTP, or Telnet services that may increase security risk.\
 \
 To further investigate the firewall dataset, additional searches were performed to identify listening services, active connections, web services, remote administration services, protocol activity, and application communications. These searches provided greater visibility into the system's attack surface and network behavior.
+Please refer to images 12 through 19 in the repository.
 
 **Step 10 — Visualization**
 
@@ -279,7 +288,8 @@ index=firewall LISTEN\
 \| stats count
 
 Visualization: Single Value and Bar Chart\
-Count listening services identified in the firewall dataset.\
+Count listening services identified in the firewall dataset.
+Please refer to images # 20 and 21 in the repository.
 
 
 **Step 11 — Save Report**
@@ -287,6 +297,7 @@ Count listening services identified in the firewall dataset.\
 Report Name: Firewall Listening Services Report
 
 Description: This report identifies listening services and exposed ports discovered on the MacBook Pro.
+Please refer to image # 22
 
 **Step 12 — Create Dashboard Panel**
 
@@ -295,6 +306,7 @@ Dashboard: Firewall SOC Monitoring Dashboard
 Panel: Listening Ports Overview
 
 Description: Displays listening services and exposed network ports identified in the firewall dataset.
+Please refer to image # 23 in the repository.
 
 **Step 13 — Create Alert**
 
@@ -303,7 +315,7 @@ Search: index=firewall LISTEN
 Alert Name: Listening Service Detection
 
 Description: Detects services actively listening for incoming network connection.\
-\
+Please refer to image # 24 in the repository.
 \
 **Step 14 — Detection Rule**
 
@@ -314,7 +326,7 @@ index=firewall\
 
 Detection Name: Open Port Detection
 
-Description: Detects open ports and listening services that may increase system attack surface.\
+Description: Detects open ports and listening services that may increase system attack surface.
 
 This detection rule identified services in a LISTEN state, indicating open ports available for incoming connections. The results revealed listening services on ports 5000 and 7000, which contribute to the system's attack surface and should be monitored as part of firewall and network security operations.\
 \
@@ -344,7 +356,8 @@ Creative 31373 ... TCP 127.0.0.1:50983 (LISTEN)\
 ControlCe ... TCP \*:7000 (LISTEN)\
 ControlCe ... TCP \*:5000 (LISTEN)\
 
-Investigation and Process analysis was performed through Mac terminal using the PIDs identified in the firewall dataset. The corresponding processes were no longer active at the time of investigation, indicating that the applications had terminated or restarted since the original data collection. The firewall snapshot nevertheless confirmed that the “ creative” process was listening on localhost-only ports, while the ControlCe process was listening on ports 5000 and 7000 across network interfaces. These findings demonstrate how firewall monitoring can identify applications responsible for exposing network services and help analysts assess potential attack surface exposure.\
+Investigation and Process analysis was performed through Mac terminal using the PIDs identified in the firewall dataset. The corresponding processes were no longer active at the time of investigation, indicating that the applications had terminated or restarted since the original data collection. The firewall snapshot nevertheless confirmed that the “ creative” process was listening on localhost-only ports, while the ControlCe process was listening on ports 5000 and 7000 across network interfaces. These findings demonstrate how firewall monitoring can identify applications responsible for exposing network services and help analysts assess potential attack surface exposure.
+Please refer to images # 25 and 26 in the repository.
 \
 **Step 15 — Threat Hunting Query**
 
@@ -355,5 +368,6 @@ index=firewall\
 \| table \_time host sourcetype \_raw
 
 Review listening services, open ports, and exposed applications for threat-hunting activities.
+Please refer to repository images # 27 and 28.
 
 This lab used Splunk Enterprise to analyze firewall-related data, identify listening services and exposed ports, and create dashboards, reports, alerts, detections, and threat-hunting queries for attack surface monitoring.
