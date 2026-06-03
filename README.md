@@ -1,9 +1,8 @@
- Splunk SOC Monitoring firewall Lab\
+ **Splunk SOC Monitoring firewall Lab**
 \
 The goal of this lab was to ingest firewall-related data collected from a MacBook Pro into Splunk Enterprise and perform SOC monitoring activities to identify listening services, exposed ports, and potential attack surfaces through dashboards, reports, alerts, detections, and threat-hunting queries.\
 \
 Firewall Index (index=firewall)
-=============================================================================================================================================================================================================================================================================================================
 
 Firewall-related data shows:
 
@@ -12,7 +11,7 @@ listening ports,\
 applications accepting connections.
 
 dataset: listening_ports.log\
-came from bash: lsof -i -P -n which was saved and included to dataset\
+which came from mac terminal bash: lsof -i -P -n which was saved and included to dataset\
 index=firewall\
 \
 Search bar: index=firewall or index=firewall \| stats count by process
@@ -25,12 +24,12 @@ investigate unauthorized applications,\
 review attack surface,\
 detect suspicious listeners.
 
-Step 1 — Create Firewall Index\
+**Step 1 — Create Firewall Index**\
 Status: Already completed in previous lab\
 The firewall index had already been created during the Splunk lab setup previous lab and was reused for the Firewall SOC Monitoring Lab. The listening_ports.log dataset was uploaded into the existing index for analysis.\
 \
 Step 2 — Upload Firewall Dataset
-============================================================================================================================================================================================================================
+
 
 Upload file: listening_ports.log
 
@@ -41,21 +40,17 @@ Host: MacBookPro\
 The firewall index had already been created during the Splunk lab setup previous lab and was reused for the Firewall SOC Monitoring Lab. The listening_ports.log dataset was uploaded into the existing index for analysis**.\**
 
 Description: The listening ports dataset was uploaded into Splunk Enterprise and assigned to the firewall index to support firewall monitoring and attack surface analysis.
+\
 
-\
-\
-\
-\
 Step 3 — Verify Ingestion
-=======================================================================================================================================================================================
+
 
 Search bar: index=firewall\
 Verify that firewall data was successfully ingested into Splunk.\
-\
 
-\
+
 Step 4 — Verify Event Count
-===========================
+
 
 Search bar:\
 \
@@ -63,7 +58,7 @@ index=firewall\
 \| stats count
 
 Count firewall events stored in the index.\
-\
+
 
 **Step 5 — Review Listening Services**
 
